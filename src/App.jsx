@@ -2,7 +2,6 @@ import { Accordion, AccordionItem } from '@nextui-org/react';
 import { v4 as uuid } from 'uuid';
 import { useState, useEffect } from 'react';
 import './App.css';
-// import './output.css';
 import {
   Input,
   Textarea,
