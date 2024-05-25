@@ -1,79 +1,13 @@
 import { Accordion, AccordionItem } from '@nextui-org/react';
 import { v4 as uuid } from 'uuid';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import './App.css';
-import {
-  Input,
-  Textarea,
-  Button,
-  Select,
-  SelectItem,
-  Tooltip,
-} from '@nextui-org/react';
-
-function Heading({ text, className }) {
-  return (
-      <div className={'text-blue-700 text-xl text-center font-bold'}>
-        {text}
-      </div>
-  );
-}
-function Contact({ address, email, contactNo, text, name }) {
-  return (
-    <>
-      <div className={'text-2xl font-bold text-blue-700'}>{name}</div>
-      <div className=" mb-4 first-section">
-        <div className="mt-2">{address}</div>
-        <div className="email-section mt-2 mb-3">
-          <div className="email">{email}</div>
-          <div className="space">|</div>
-          <div className="number">{contactNo}</div>
-        </div>
-        <div className={'text-center'}>{text}</div>
-      </div>
-    </>
-  );
-}
-
-function Education({
-  name,
-  startDate,
-  endDate,
-  jobName,
-  text,
-  title,
-  className,
-}) {
-  return (
-    <div className="second-section">
-      <div className="title-section">
-        <Heading text={title} className={className}></Heading>
-      </div>
-      <div className="company">
-        <div className="company-box">
-          <div className="company-name italic">{name}</div> 
-          <div className="date flex gap-1">
-            <div className="startDate">{startDate}</div>
-            <div>-</div>
-            <div className="endDate">{endDate}</div>
-          </div>
-        </div>
-        <div className="job-name">{jobName}</div>
-        <Text className={'prev-job'} text={text}></Text>
-      </div>
-    </div>
-  );
-}
-
-function Text({ text }) {
-  return (
-    <div className={'prev-job'}>
-      <ul className="ml-5 mt-2 text-left" style={{ listStyleType: 'disc' }}>
-        <li>{text}</li>
-      </ul>
-    </div>
-  );
-}
+import { Input, Textarea, Button, Tooltip } from '@nextui-org/react';
+import Heading from './components/heading';
+import Contact from './components/contact';
+import Skills from './components/skills';
+import DateElement from './components/dateElements';
+import Project from './components/project';
 
 function App() {
   const [namee, setNamee] = useState({ name: 'Arnold' });
@@ -97,8 +31,6 @@ function App() {
     name: 'ArbiSoft',
   });
   const [jobTitle, setJobTitle] = useState({ name: 'Developer' });
-  const [startDate, setStartDate] = useState('ert');
-  const [endDate, setEndDate] = useState('jhfg');
   const [details, setDetails] = useState({
     name: 'these are the details of my job',
   });
@@ -109,17 +41,11 @@ function App() {
 
   const [selectedYear, setSelectedYear] = useState('2021');
   const [selectedYearEnd, setSelectedYearEnd] = useState('2007');
-  const [selectedEducationYear, setSelectedEducationYear] = useState('2021');
-  const [selectedEducationYearEnd, setSelectedEducationYearEnd] =
-    useState('2007');
+  useState('2007');
   const [selectedMonth, setSelectedMonth] = useState('May');
   const [selectedMonthEnd, setSelectedMonthEnd] = useState('March');
-  const [selectedEducationMonth, setSelectedEducationMonth] = useState('May');
-  const [selectedEducationMonthEnd, setSelectedEducationMonthEnd] =
-    useState('March');
-  const [showElement, setShowElement] = useState(false);
+  useState('March');
   const [showElementTwo, setShowElementTwo] = useState(false);
-  const [showEducationElement, setShowEducationElement] = useState(false);
   const [info, setInfoValues] = useState({
     inputName: 'Sherlock Holmes',
     inputEmail: 'davidprocter951@gmail.com',
@@ -276,115 +202,46 @@ function App() {
     ],
   });
 
-  function extractYear(year) {
-    return String(year).slice(-2);
-  }
-
-  function monthToNumber(monthName) {
-    const months = [
-      'january',
-      'february',
-      'march',
-      'april',
-      'may',
-      'june',
-      'july',
-      'august',
-      'september',
-      'october',
-      'november',
-      'december',
-    ];
-
-    const lowercaseMonth = monthName.toLowerCase();
-    const monthIndex = months.indexOf(lowercaseMonth);
-    const monthNumber = String(monthIndex + 1).padStart(2, '0');
-
-    return monthNumber;
-  }
-
-  function Skills({ skills, heading }) {
-    return skills.map((skill, index) => {
-      if (index === 0) {
-        return (
-          <div key={uuid()}>
-            <div className="" key={uuid()}>
-              <Heading text={heading} className={'heading'}></Heading>
-            </div>
-            <Text text={skill.name} key={index}></Text>
-          </div>
-        );
-      } else {
-        return <Text text={skill.name} key={index}></Text>;
-      }
-    });
-  }
-  function Project({ title, heading }) {
-    return title.map((project, index) => {
+  function AddReference() {
+    return info.references.map((obj, index) => {
       if (index === 0) {
         return (
           <div key={index} className="second-section mb-2">
-            <div>
-              <Heading text={heading} className={'heading'}></Heading>
+            <div className="">
+              <Heading text={'References'} className={'heading'}></Heading>
             </div>
-            <div className="company">
-              <div className="company-box">
-                <div className="company-name">{project.name}</div> 
-
-                <div className="date flex gap-1">
-                  <div className="startDate">
-                    {monthToNumber(project.startDate.month) +
-                      '/' +
-                      extractYear(project.startDate.year)}
-                  </div>
-                  <div>-</div>
-                  <div className="endDate">
-                    {monthToNumber(project.endDate.month) +
-                      '/' +
-                      extractYear(project.endDate.year)}
-                  </div>
-                </div>
-              </div>
-              <div className="job-name">{project.other}</div>
-              <Text
-                className={'prev-job text-left'}
-                text={project.details}
-              ></Text>
+            <div className="flex">
+              <div className="text-left mr-1">{obj.name}</div>
+              <div>-</div>
+              <div className="ml-1">{obj.jobTitle},</div>
+              <div className="company-name ml-1">{obj.companyName}</div>
+            </div>
+            <div className="flex">
+              <div className="mr-1">{obj.mobileNo}</div>
+              <div>|</div>
+              <div className="ml-1">{obj.email}</div>
             </div>
           </div>
         );
       } else {
         return (
           <div key={index} className="second-section mb-2">
-            <div className="company">
-              <div className="company-box">
-                <div className="company-name">{project.name}</div>
-                <div className="date flex gap-1">
-                  <div className="startDate">
-                    {monthToNumber(project.startDate.month) +
-                      '/' +
-                      extractYear(project.startDate.year)}
-                  </div>
-                  <div>-</div>
-                  <div className="endDate">
-                    {monthToNumber(project.endDate.month) +
-                      '/' +
-                      extractYear(project.endDate.year)}
-                  </div>
-                </div>
-              </div>
-              <div className="job-name">{project.other}</div>
-              <Text
-                className={'prev-job text-left'}
-                text={project.details}
-              ></Text>
+            <div className="flex">
+              <div className="text-left mr-1">{obj.name}</div>
+              <div>-</div>
+              <div className="ml-1">{obj.jobTitle},</div>
+              <div className="company-name ml-1">{obj.companyName}</div>
+            </div>
+            <div className="flex">
+              <div className="mr-1">{obj.mobileNo}</div>
+              <div>|</div>
+              <div className="ml-1">{obj.email}</div>
             </div>
           </div>
         );
       }
     });
   }
-
   function AddSection({ field }) {
     if (field === 'projects') {
       return (
@@ -625,7 +482,7 @@ function App() {
       );
     }
   }
-  function AddSkills({ object, field }) {
+  function AddSkills() {
     return info.skills.map((obj, index) => {
       return (
         <Tooltip
@@ -641,47 +498,103 @@ function App() {
       );
     });
   }
-  function AddReference() {
-    return info.references.map((obj, index) => {
-      if (index === 0) {
-        return (
-          <div key={index} className="second-section mb-2">
-            <div className="">
-              <Heading text={'References'} className={'heading'}></Heading>
-            </div>
-            <div className="flex">
-              <div className="text-left mr-1">{obj.name}</div>
-              <div>-</div>
-              <div className="ml-1">{obj.jobTitle},</div>
-              <div className="company-name ml-1">{obj.companyName}</div>
-            </div>
-            <div className="flex">
-              <div className="mr-1">{obj.mobileNo}</div>
-              <div>|</div>
-              <div className="ml-1">{obj.email}</div>
-            </div>
-          </div>
-        );
-      } else {
-        return (
-          <div key={index} className="second-section mb-2">
-            <div className="flex">
-              <div className="text-left mr-1">{obj.name}</div>
-              <div>-</div>
-              <div className="ml-1">{obj.jobTitle},</div>
-              <div className="company-name ml-1">{obj.companyName}</div>
-            </div>
-            <div className="flex">
-              <div className="mr-1">{obj.mobileNo}</div>
-              <div>|</div>
-              <div className="ml-1">{obj.email}</div>
-            </div>
-          </div>
-        );
-      }
+  const handleButtonClickTwo = () => {
+    setShowElementTwo(!showElementTwo);
+  };
+  function handleInputChange(event, fieldName) {
+    setInfoValues({
+      ...info,
+      [fieldName]: event.target.value,
     });
   }
+  function handleInputFields(event, field) {
+    const value = event.target.value;
+    if (field === 'companyName') companyName.name = value;
+    if (field === 'jobTitle') jobTitle.name = value;
+    if (field === 'details') details.name = value;
+    if (field === 'skills') setSkill({ name: value });
+  }
+  function handleInputFieldss(event, field) {
+    const value = event.target.value;
+    if (field === 'name') namee.name = value;
+    if (field === 'jobTitle') jobTitlee.name = value;
+    if (field === 'companyName') companyNamee.name = value;
+    if (field === 'mobleNo') mobileNo.name = value;
+    if (field === 'email') email.name = value;
+  }
+  function handleUpdateInputFields(event, field) {
+    const value = event.target.value;
 
+    if (field === 'companyName') updateCompanyName.name = value;
+    if (field === 'jobTitle') updateJobTitle.name = value;
+    if (field === 'details') updateDetails.name = value;
+  }
+  function handleFormClick(uiid, workField) {
+    if (workField === 'skills') {
+      const obj = {
+        name: skill.name,
+        id: uiid,
+      };
+      info[workField] = [...info[workField], obj];
+      setSkill({ name: '' });
+    } else if (workField === 'references') {
+      const obj = {
+        name: namee.name,
+        jobTitle: jobTitlee.name,
+        companyName: companyNamee.name,
+        id: uiid,
+        mobileNo: mobileNo.name,
+        email: email.name,
+      };
+      handleButtonClickTwo();
+      setInfoValues((prevValues) => ({
+        ...prevValues,
+        [workField]: [...prevValues[workField], obj],
+      }));
+    } else {
+      const obj = {
+        name: companyName.name,
+        other: jobTitle.name,
+        details: details.name,
+        id: uiid,
+        startDate: {
+          month: month,
+          year: year,
+        },
+        endDate: {
+          month: endMonth,
+          year: endYear,
+        },
+      };
+      handleButtonClickTwo();
+      setInfoValues((prevValues) => ({
+        ...prevValues,
+        [workField]: [...prevValues[workField], obj],
+      }));
+    }
+  }
+  function handleUpdateFormClick(uuid, workField) {
+    const obj = {
+      name: updateCompanyName.name,
+      other: updateJobTitle.name,
+      details: updateDetails.name,
+      id: uuid,
+      startDate: {
+        month: updateMonth,
+        year: updateYear,
+      },
+      endDate: {
+        month: updateEndMonth,
+        year: updateEndYear,
+      },
+    };
+
+    workField.map((job) => {
+      job.id === uuid ? Object.assign(job, obj) : console.log('not found');
+    });
+
+    setInfoValues({ ...info });
+  }
   function InputFields({ object, field }) {
     return object.map((obj, index) => {
       if (field === 'projects') {
@@ -697,16 +610,7 @@ function App() {
                       handleUpdateInputFields(event, 'companyName');
                     }}
                     label={info.Labels[field].name}
-                    // placeholder="Sherlock Homes Detectives Agency"
                   />
-                  {/* <Input
-                    type="text"
-                    placeholder={obj.other}
-                    onChange={(event) => {
-                      handleUpdateInputFields(event, 'jobTitle');
-                    }}
-                    label={info.Labels[field].title}
-                  /> */}
                 </div>
                 <div className="flex w-full md:flex-nowrap gap-5 mb-4 ">
                   <div className="flex flex-col gap-3 ml-2 w-full">
@@ -910,290 +814,6 @@ function App() {
         );
       }
     });
-  }
-  function DateElement({ name, selectYear, setYear, selectMonth, setMonth }) {
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return (
-      <div className="flex flex-col h-20  w-2/4  gap-3 justify-center items-center">
-        <div className="h-full font-bold align-text-top w-full ">{name}</div>
-        <div className="selectElement flex w-fit h-fit items-center justify-center gap-4">
-          <div className="flex w-full md:flex-nowrap gap-4 flex-row justify-center">
-            <Select
-              className="flex w-28 h-fit  p-0"
-              placeholder={selectMonth}
-              value={selectMonth}
-            >
-              {months.map((month, index) => (
-                <SelectItem
-                  data={month}
-                  placeholder={selectMonth}
-                  onClick={(e) => {
-                    setMonth(e.target.textContent);
-                    // setMonth = e.target.textContent
-                  }}
-                  key={index}
-                >
-                  {month}
-                </SelectItem>
-              ))}
-            </Select>
-            <Select
-              size="none"
-              value={selectYear}
-              placeholder={selectYear}
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
-              className="flex w-20 h-fit  p-0"
-            >
-              {generateYearOptions()}
-            </Select>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  function generateYearOptions() {
-    const currentYear = new Date().getFullYear();
-    const years = [];
-    for (let year = currentYear; year >= 1990; year--) {
-      years.push(year);
-    }
-    return years.map((year) => (
-      <SelectItem className=" w-fit" key={year} value={year}>
-        {year}
-      </SelectItem>
-    ));
-  }
-
-  function handleButtonClick(event) {
-    event.preventDefault();
-  }
-
-  const handleClick = () => {
-    setShowElement(!showElement);
-  };
-
-  const handleButtonClickTwo = () => {
-    setShowElementTwo(!showElementTwo);
-  };
-
-  //   const handleCareerButton = (event) => {
-  //     setElementsArray([...elementsArray, array]);
-  //
-  //     // <>
-  //     // <div className="flex w-full flex-wrap md:flex-nowrap gap-5 mb-4">
-  //     //                 <Input
-  //     //                   type="text"
-  //     //                   value={info.jobs[0].name}
-  //     //                   onChange={(event) => {
-  //     //                     handleInputChange(event, 'companyName');
-  //     //                   }}
-  //     //                   label="Compnay Name"
-  //     //                   placeholder="Sherlock Homes Detectives Agency"
-  //     //                 />
-  //     //                 <Input
-  //     //                   type="text"
-  //     //                   value={info.jobTitle}
-  //     //                   onChange={(event) => {
-  //     //                     handleInputChange(event, 'jobTitle');
-  //     //                   }}
-  //     //                   label="Job Title"
-  //     //                   placeholder="davidprocter951@gmail.com"
-  //     //                 />
-  //     //               </div>
-  //     //               <div className="flex w-full md:flex-nowrap gap-5 mb-4  ">
-  //     //                 {!showElement && (
-  //     //                   <div className="beforeDate flex gap-3">
-  //     //                     <Input
-  //     //                       type="text"
-  //     //                       value={
-  //     //                         info.compnayStartDate.month +
-  //     //                         ', ' +
-  //     //                         info.compnayStartDate.year
-  //     //                       }
-  //     //                       label={'Start Date'}
-  //     //                       className="w-2/4"
-  //     //                       onClick={handleClick}
-  //     //                     ></Input>
-  //     //                     <Input
-  //     //                       type="text"
-  //     //                       value={
-  //     //                         info.compnayEndDate.month +
-  //     //                         ', ' +
-  //     //                         info.compnayEndDate.year
-  //     //                       }
-  //     //                       label={'End Date'}
-  //     //                       className="w-2/4"
-  //     //                       onClick={handleClick}
-  //     //                     ></Input>
-  //     //                   </div>
-  //     //                 )}
-  //     //                 {showElement && (
-  //     //                   <div className="flex flex-col gap-3">
-  //     //                     <div className="afterDate flex w-full gap-5">
-  //     //                       <DateElement
-  //     //                         name={'Start Date'}
-  //     //                         setMonth={setSelectedMonth}
-  //     //                         selectMonth={selectedMonth}
-  //     //                         setYear={setSelectedYear}
-  //     //                         selectYear={selectedYear}
-  //     //                       ></DateElement>
-  //     //                       <DateElement
-  //     //                         name={'End Date'}
-  //     //                         setMonth={setSelectedMonthEnd}
-  //     //                         selectMonth={selectedMonthEnd}
-  //     //                         setYear={setSelectedYearEnd}
-  //     //                         selectYear={selectedYearEnd}
-  //     //                       ></DateElement>
-  //     //                     </div>
-  //     //                     <div className="flex gap-4 items-center justify-center">
-  //     //                       <Button onClick={handleClick} size="sm">
-  //     //                         Save
-  //     //                       </Button>
-  //     //                     </div>
-  //     //                   </div>
-  //     //                 )}
-  //     //               </div>
-  //     //               <Textarea
-  //     //                 label="Details"
-  //     //                 value={info.details}
-  //     //                 onChange={(event) => {
-  //     //                   handleInputChange(event, 'details');
-  //     //                 }}
-  //     //                 placeholder="What did you do at your previous job? "
-  //     //                 className=" mb-5"
-  //     //               />
-  //     //               <div className="flex flex-wrap gap-4 items-center justify-center ">
-  //     //                 <Button color="danger" variant="ghost">
-  //     //                   Delete
-  //     //                 </Button>
-  //     //                 <Button color="primary" variant="solid">
-  //     //                   Save
-  //     //                 </Button>
-  //     //               </div>
-  //     // </>
-  //   };
-  const handleEducationClick = () => {
-    setShowEducationElement(!showEducationElement);
-  };
-  function handleInputChange(event, fieldName) {
-    setInfoValues({
-      ...info,
-      [fieldName]: event.target.value,
-    });
-    // const value  = event.target.value
-
-    // set
-  }
-
-  function handleInputFields(event, field) {
-    const value = event.target.value;
-    if (field === 'companyName') companyName.name = value;
-    if (field === 'jobTitle') jobTitle.name = value;
-    if (field === 'details') details.name = value;
-    if (field === 'skills') setSkill({ name: value });
-  }
-  function handleInputFieldss(event, field) {
-    const value = event.target.value;
-    if (field === 'name') namee.name = value;
-    if (field === 'jobTitle') jobTitlee.name = value;
-    if (field === 'companyName') companyNamee.name = value;
-    if (field === 'mobleNo') mobileNo.name = value;
-    if (field === 'email') email.name = value;
-  }
-
-  function handleUpdateInputFields(event, field) {
-    const value = event.target.value;
-
-    if (field === 'companyName') updateCompanyName.name = value;
-    if (field === 'jobTitle') updateJobTitle.name = value;
-    if (field === 'details') updateDetails.name = value;
-  }
-
-  function handleFormClick(uiid, workField) {
-    if (workField === 'skills') {
-      const obj = {
-        name: skill.name,
-        id: uiid,
-      };
-      info[workField] = [...info[workField], obj];
-      setSkill({ name: '' });
-    } else if (workField === 'references') {
-      const obj = {
-        name: namee.name,
-        jobTitle: jobTitlee.name,
-        companyName: companyNamee.name,
-        id: uiid,
-        mobileNo: mobileNo.name,
-        email: email.name,
-      };
-      handleButtonClickTwo();
-      setInfoValues((prevValues) => ({
-        ...prevValues,
-        [workField]: [...prevValues[workField], obj],
-      }));
-    } else {
-      const obj = {
-        name: companyName.name,
-        other: jobTitle.name,
-        details: details.name,
-        id: uiid,
-        startDate: {
-          month: month,
-          year: year,
-        },
-        endDate: {
-          month: endMonth,
-          year: endYear,
-        },
-      };
-      handleButtonClickTwo();
-      setInfoValues((prevValues) => ({
-        ...prevValues,
-        [workField]: [...prevValues[workField], obj],
-      }));
-    }
-  }
-
-  function handleSetInfo() {
-    setInfoValues({ ...info });
-  }
-  function handleUpdateFormClick(uuid, workField) {
-    const obj = {
-      name: updateCompanyName.name,
-      other: updateJobTitle.name,
-      details: updateDetails.name,
-      id: uuid,
-      startDate: {
-        month: updateMonth,
-        year: updateYear,
-      },
-      endDate: {
-        month: updateEndMonth,
-        year: updateEndYear,
-      },
-    };
-
-    workField.map((job) => {
-      job.id === uuid ? Object.assign(job, obj) : console.log('not found');
-    });
-
-    setInfoValues({ ...info });
   }
 
   return (
