@@ -13,11 +13,9 @@ import {
 
 function Heading({ text, className }) {
   return (
-    // <div className='text-center align-center items-center'>
       <div className={'text-blue-700 text-xl text-center font-bold'}>
         {text}
       </div>
-    // </div>
   );
 }
 function Contact({ address, email, contactNo, text, name }) {
