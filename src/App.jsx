@@ -104,6 +104,7 @@ function App() {
     projects: [
       {
         name: 'Resume Builder',
+        id: 13,
         startDate: {
           month: selectedMonth,
           year: selectedYear,
@@ -116,7 +117,8 @@ function App() {
           'This is the first react project that Im building which might not be good as I want it to be.',
       },
       {
-        name: 'Resume Builder',
+        name: 'The Weather App',
+        id: 12,
         startDate: {
           month: selectedMonth,
           year: selectedYear,
@@ -126,13 +128,14 @@ function App() {
           year: selectedYearEnd,
         },
         details:
-          'This is the first react project that Im building which might not be good as I want it to be.',
+          'This is the Weather app that Im building.',
       },
     ],
     educations: [
       {
-        name: 'University of Cambridge',
-        other: 'BSc Chemistry - 1st',
+        name: 'Punjab Group of Colleges',
+        other: 'ICS',
+        id: 14,
         startDate: {
           month: selectedMonth,
           year: selectedYear,
@@ -142,11 +145,12 @@ function App() {
           year: selectedYearEnd,
         },
         details:
-          'Exploring the field of forensic science and analytical chemistry',
+          'Exploring the field of Computer Science',
       },
       {
         name: 'University of Cambridge',
         other: 'BSc Chemistry - 1st',
+        id: 15,
         startDate: {
           month: selectedMonth,
           year: selectedYear,
