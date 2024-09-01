@@ -1,22 +1,18 @@
-
-
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-
-
-
-
-body{
+.bodyyy {
+  color: red;
+}
+body {
   width: 100vw;
-  font-size: 16px; 
+  font-size: 16px;
+
   color: black;
   /* background-color: red; */
   display: flex;
   justify-content: center;
-
-
 }
 .logo {
   height: 6em;
@@ -31,18 +27,12 @@ body{
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-
-
 .card {
   padding: 2em;
 }
 
-
-
-
-
 .page {
-  max-width: 7.27in; 
+  max-width: 7.27in;
   /* max-height: 9.90in;  */
   /* width: 21rem; */
   width: 80rem;
@@ -52,7 +42,7 @@ body{
   /* place-items: center; */
 }
 .page2 {
-  max-width: 7.27in; 
+  max-width: 7.27in;
   /* max-height: 9.90in;  */
   /* width: 21rem; */
   width: 80rem;
@@ -85,10 +75,8 @@ body{
   display: flex;
   justify-content: center;
   gap: 0.2rem;
-
 }
 .about-self {
-
   display: flex;
   margin-top: 1rem;
 }
@@ -96,7 +84,6 @@ body{
   display: flex;
   place-items: center;
   height: 3rem;
-
 }
 .second-line {
   height: 0.19rem;
@@ -117,7 +104,8 @@ body{
   justify-content: flex-start;
   align-items: start;
 }
-.company-box,.job-name {
+.company-box,
+.job-name {
   display: flex;
   font-weight: bold;
   justify-content: space-between;
@@ -130,7 +118,6 @@ body{
 
 /* .back { */
 /* } */
-
 
 .hidden {
   display: none;
